@@ -4,9 +4,9 @@ import requests
 
 def get_random_comic():
 
-    url_latest = "https://xkcd.com/info.0.json"
+    latest_url = "https://xkcd.com/info.0.json"
 
-    response = requests.get(url_latest)
+    response = requests.get(latest_url)
     response.raise_for_status()
 
     latest_comics = response.json().get("num")
@@ -15,17 +15,17 @@ def get_random_comic():
     url_random = f"https://xkcd.com/{comics_num}/info.0.json"
     response = requests.get(url_random)
     response.raise_for_status()
+    response_json = response.json()
 
-    image_link = response.json().get("img")
-    message = response.json().get("alt")
-    print(message)
+    image_link = response_json.get("img")
+    message = response_json.get("alt")
 
-    image = requests.get(image_link)
-    image.raise_for_status()
+    comic_response = requests.get(image_link)
+    comic_response.raise_for_status()
 
     file_name = f"xkcd_{comics_num}.png"
 
     with open(file_name, 'wb') as file:
-        file.write(image.content)
+        file.write(comic_response.content)
 
     return message, file_name

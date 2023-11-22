@@ -15,11 +15,11 @@ def vk_group_wall_upload_image(
 
 
 def vk_server_upload_image(vk_token, group_id, vk_api, file_name):
-    url_get_server = f"https://api.vk.com/method/photos.getWallUploadServer" \
+    server_url = f"https://api.vk.com/method/photos.getWallUploadServer" \
                      f"?group_id={group_id}" \
                      f"&access_token={vk_token}&v={vk_api}"
 
-    response = requests.get(url_get_server)
+    response = requests.get(server_url)
     upload_url = response.json().get("response").get("upload_url")
 
     with open(file_name, 'rb') as file:
@@ -28,16 +28,18 @@ def vk_server_upload_image(vk_token, group_id, vk_api, file_name):
         }
         response = requests.post(upload_url, files=files)
         response.raise_for_status()
-        server = response.json().get("server")
-        photo = response.json().get("photo")
-        vk_hash = response.json().get("hash")
 
-    url_save_wall_photo = f"https://api.vk.com/method/photos.saveWallPhoto?" \
+        response_json = response.json()
+        server = response_json.get("server")
+        photo = response_json.get("photo")
+        vk_hash = response_json.get("hash")
+
+    wall_save_photo_url = f"https://api.vk.com/method/photos.saveWallPhoto?" \
                           f"&group_id={group_id}" \
                           f"&server={server}&hash={vk_hash}&photo={photo}" \
                           f"&access_token={vk_token}&v={vk_api}"
 
-    response = requests.post(url_save_wall_photo)
+    response = requests.post(wall_save_photo_url)
     response.raise_for_status()
     return response.json()
 

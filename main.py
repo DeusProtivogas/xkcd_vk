@@ -13,12 +13,12 @@ def main():
     vk_api_version = os.environ['VK_API_VERSION']
 
     message, image_name = get_random_comic()
-    image_data = vk_server_upload_image(
+    image_owner_id = vk_server_upload_image(
         vk_token, group_id, vk_api_version, image_name
     )
 
-    attachment = f"photo{image_data.get('response')[0].get('owner_id')}_" \
-                 f"{image_data.get('response')[0].get('id')}"
+    attachment = f"photo{image_owner_id.get('response')[0].get('owner_id')}_" \
+                 f"{image_owner_id.get('response')[0].get('id')}"
     vk_group_wall_upload_image(
         vk_token, group_id, vk_api_version, attachment, message
     )
