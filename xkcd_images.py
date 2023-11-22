@@ -1,5 +1,5 @@
-import requests
 import random
+import requests
 
 
 def get_random_comics():

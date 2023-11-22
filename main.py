@@ -1,8 +1,9 @@
 import os
 from dotenv import load_dotenv
+
 from xkcd_images import get_random_comics
-from vk_image_uploading import vk_server_upload_image, \
-    vk_group_wall_upload_image
+from vk_image_uploading import vk_server_upload_image
+from vk_image_uploading import vk_group_wall_upload_image
 
 
 def main():
