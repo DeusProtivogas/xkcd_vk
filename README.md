@@ -51,3 +51,7 @@ Uploads the downloaded image to VK server, to prepare it for future uploading to
 ### vk_group_wall_upload_image
 
 Posts the comics and its description to the group.
+
+### check_vk_response
+
+Checks responses from VK api for errors, raises exceptions if any found.
