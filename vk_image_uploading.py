@@ -1,7 +1,7 @@
 import requests
 
 
-def vk_group_wall_upload_image(
+def upload_image_to_vk_group_wall(
         vk_token, group_id, vk_api, attachment, message
 ):
     url = f"https://api.vk.com/method/wall.post?owner_id=-{group_id}" \
@@ -14,7 +14,7 @@ def vk_group_wall_upload_image(
     return response.json()
 
 
-def vk_server_upload_image(vk_token, group_id, vk_api, file_name):
+def upload_image_to_vk_server(vk_token, group_id, vk_api, file_name):
     server_url = f"https://api.vk.com/method/photos.getWallUploadServer" \
                      f"?group_id={group_id}" \
                      f"&access_token={vk_token}&v={vk_api}"

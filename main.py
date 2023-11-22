@@ -3,8 +3,8 @@ from dotenv import load_dotenv
 
 from xkcd_images import get_random_comic
 from xkcd_images import get_random_url_filename
-from vk_image_uploading import vk_server_upload_image
-from vk_image_uploading import vk_group_wall_upload_image
+from vk_image_uploading import upload_image_to_vk_server
+from vk_image_uploading import upload_image_to_vk_group_wall
 
 
 def main():
@@ -17,13 +17,13 @@ def main():
 
     try:
         message = get_random_comic(url_comic, comic_name)
-        image_owner_id = vk_server_upload_image(
+        image_owner_id = upload_image_to_vk_server(
             vk_token, group_id, vk_api_version, comic_name
         )
 
         attachment = f"photo{image_owner_id.get('response')[0].get('owner_id')}_" \
                      f"{image_owner_id.get('response')[0].get('id')}"
-        vk_group_wall_upload_image(
+        upload_image_to_vk_group_wall(
             vk_token, group_id, vk_api_version, attachment, message
         )
     except ValueError:
