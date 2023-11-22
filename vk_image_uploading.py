@@ -56,18 +56,3 @@ def upload_image_to_vk_server(vk_token, group_id, vk_api, file_name):
     response = requests.post(wall_save_photo_url, params=params)
     response.raise_for_status()
     return response.json()
-
-
-def vk_get_groups(vk_token):
-    params = {
-        "filter": "admin",
-        "access_token": vk_token,
-        "v": "5.154",
-    }
-
-    url = f"https://api.vk.com/method/groups.get"
-
-    response = requests.get(url, params=params)
-
-    response.raise_for_status()
-    return response.json()
