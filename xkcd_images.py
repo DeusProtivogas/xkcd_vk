@@ -2,7 +2,7 @@ import random
 import requests
 
 
-def get_random_comics():
+def get_random_comic():
 
     url_latest = "https://xkcd.com/info.0.json"
 
