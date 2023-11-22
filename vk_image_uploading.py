@@ -38,10 +38,10 @@ def upload_image_to_vk_server(vk_token, group_id, vk_api, file_name):
         response = requests.post(upload_url, files=files)
         response.raise_for_status()
 
-        response_json = response.json()
-        server = response_json.get("server")
-        photo = response_json.get("photo")
-        vk_hash = response_json.get("hash")
+    response_json = response.json()
+    server = response_json.get("server")
+    photo = response_json.get("photo")
+    vk_hash = response_json.get("hash")
 
     params = {
         "group_id": group_id,
