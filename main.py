@@ -1,4 +1,5 @@
 import os
+import requests
 from dotenv import load_dotenv
 
 from xkcd_images import get_random_comic
@@ -26,8 +27,10 @@ def main():
         upload_image_to_vk_group_wall(
             vk_token, group_id, vk_api_version, attachment, message
         )
+    except requests.HTTPError as e:
+        print(e)
     except ValueError:
-        print("Error occured!")
+        print("Error occurred!")
     finally:
         os.remove(comic_name)
 

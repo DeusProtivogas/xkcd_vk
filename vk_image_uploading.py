@@ -1,6 +1,15 @@
 import requests
 
 
+def check_vk_response(response):
+    if isinstance(response, dict) and response.get("error"):
+        raise requests.HTTPError(
+            f'Error {response.get("error").get("error_code")}, '
+            f'{response.get("error").get("error_msg")}'
+        )
+    return None
+
+
 def upload_image_to_vk_group_wall(
         vk_token, group_id, vk_api, attachment, message
 ):
@@ -16,8 +25,9 @@ def upload_image_to_vk_group_wall(
 
     response = requests.post(url, params=params)
     response.raise_for_status()
-
-    return response.json()
+    response_json = response.json()
+    check_vk_response(response_json)
+    return response_json
 
 
 def upload_image_to_vk_server(vk_token, group_id, vk_api, file_name):
@@ -29,6 +39,9 @@ def upload_image_to_vk_server(vk_token, group_id, vk_api, file_name):
     server_url = f"https://api.vk.com/method/photos.getWallUploadServer"
 
     response = requests.get(server_url, params=params)
+    response.raise_for_status()
+    response_json = response.json()
+    check_vk_response(response_json)
     upload_url = response.json().get("response").get("upload_url")
 
     with open(file_name, 'rb') as file:
