@@ -21,10 +21,10 @@ def get_random_comic(url_random, file_name):
 
     response = requests.get(url_random)
     response.raise_for_status()
-    response_json = response.json()
+    response_dict = response.json()
 
-    image_link = response_json.get("img")
-    message = response_json.get("alt")
+    image_link = response_dict.get("img")
+    message = response_dict.get("alt")
 
     comic_response = requests.get(image_link)
     comic_response.raise_for_status()

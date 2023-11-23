@@ -7,10 +7,9 @@ def check_vk_response(response):
             f'Error {response.get("error").get("error_code")}, '
             f'{response.get("error").get("error_msg")}'
         )
-    return None
 
 
-def upload_image_to_vk_group_wall(
+def post_image_to_vk_group_wall(
         vk_token, group_id, vk_api, attachment, message
 ):
     params = {
@@ -25,9 +24,9 @@ def upload_image_to_vk_group_wall(
 
     response = requests.post(url, params=params)
     response.raise_for_status()
-    response_json = response.json()
-    check_vk_response(response_json)
-    return response_json
+    response_dict = response.json()
+    check_vk_response(response_dict)
+    return response_dict
 
 
 def upload_image_to_vk_server(vk_token, group_id, vk_api, file_name):
@@ -40,8 +39,8 @@ def upload_image_to_vk_server(vk_token, group_id, vk_api, file_name):
 
     response = requests.get(server_url, params=params)
     response.raise_for_status()
-    response_json = response.json()
-    check_vk_response(response_json)
+    response_dict = response.json()
+    check_vk_response(response_dict)
     upload_url = response.json().get("response").get("upload_url")
 
     with open(file_name, 'rb') as file:
@@ -49,12 +48,12 @@ def upload_image_to_vk_server(vk_token, group_id, vk_api, file_name):
             'photo': file,
         }
         response = requests.post(upload_url, files=files)
-        response.raise_for_status()
+    response.raise_for_status()
 
-    response_json = response.json()
-    server = response_json.get("server")
-    photo = response_json.get("photo")
-    vk_hash = response_json.get("hash")
+    response_dict = response.json()
+    server = response_dict.get("server")
+    photo = response_dict.get("photo")
+    vk_hash = response_dict.get("hash")
 
     params = {
         "group_id": group_id,
