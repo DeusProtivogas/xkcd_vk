@@ -24,9 +24,9 @@ def post_image_to_vk_group_wall(
 
     response = requests.post(url, params=params)
     response.raise_for_status()
-    response_parsed = response.json()
-    check_vk_response(response_parsed)
-    return response_parsed
+    parsed_response = response.json()
+    check_vk_response(parsed_response)
+    return parsed_response
 
 
 def upload_image_to_vk_server(vk_token, group_id, vk_api, file_name):
@@ -39,8 +39,8 @@ def upload_image_to_vk_server(vk_token, group_id, vk_api, file_name):
 
     response = requests.get(server_url, params=params)
     response.raise_for_status()
-    response_parsed = response.json()
-    check_vk_response(response_parsed)
+    parsed_response = response.json()
+    check_vk_response(parsed_response)
     upload_url = response.json().get("response").get("upload_url")
 
     with open(file_name, 'rb') as file:
@@ -50,10 +50,10 @@ def upload_image_to_vk_server(vk_token, group_id, vk_api, file_name):
         response = requests.post(upload_url, files=files)
     response.raise_for_status()
 
-    response_parsed = response.json()
-    server = response_parsed.get("server")
-    photo = response_parsed.get("photo")
-    vk_hash = response_parsed.get("hash")
+    parsed_response = response.json()
+    server = parsed_response.get("server")
+    photo = parsed_response.get("photo")
+    vk_hash = parsed_response.get("hash")
 
     params = {
         "group_id": group_id,
